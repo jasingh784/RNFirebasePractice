@@ -37,17 +37,26 @@ export default function HomeScreen(props) {
             'contentType': "image/jpeg"
         }
 
-        //push to path
-        storageRef.child('images/' + Date.now()).put(blob).then(function(snapshot) {
-            console.log('Uploaded', snapshot.totalBytes, 'bytes');
+        const snapshot = await storageRef.child('images/' + Date.now()).put(blob)
+
+        console.log('Uploaded', snapshot.totalBytes, 'bytes');
             console.log('file metadata:', snapshot.metadata);
             //get download url
             snapshot.ref.getDownloadURL().then(function(url) {
-                console.log('file available at', url);
+                console.log('file available at async await', url);
             })
-        }).catch(function(error) {
-            console.error('upload failed:', error);
-        })
+
+        //push to path
+        //storageRef.child('images/' + Date.now()).put(blob).then(function(snapshot) {
+        //     console.log('Uploaded', snapshot.totalBytes, 'bytes');
+        //     console.log('file metadata:', snapshot.metadata);
+        //     //get download url
+        //     snapshot.ref.getDownloadURL().then(function(url) {
+        //         console.log('file available at', url);
+        //     })
+        // }).catch(function(error) {
+        //     console.error('upload failed:', error);
+        // })
     }
 
     if(selectedImage !== null) {
